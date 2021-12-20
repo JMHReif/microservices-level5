@@ -31,7 +31,6 @@ public class Service2Application {
 class TextController {
 	private final WebClient client;
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	Mono<String> getText() {
 		return client.get()
 				.uri("/text")
