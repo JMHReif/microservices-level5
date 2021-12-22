@@ -35,3 +35,7 @@ To reproduce this intro example, please follow the steps.
 2. Run each service (either from an IDE or command line)
 3. Open a browser and go to `localhost:8080/text` OR open a command line window and execute `curl localhost:8080/text`.
 4. See the results `Hello, World!` appear :)
+
+== Content
+
+* Blog post: https://jmhreif.com/blog/microservices-level1/[Microservices Level 1^]
