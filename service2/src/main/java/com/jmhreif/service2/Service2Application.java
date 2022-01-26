@@ -42,7 +42,6 @@ class BookController {
 	}
 }
 
-@Data
 class Book {
 	private String bookId;
 	private String title;

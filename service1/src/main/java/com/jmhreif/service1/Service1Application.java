@@ -52,7 +52,6 @@ interface BookRepository extends ReactiveCrudRepository<Book, String> {
 
 @Data
 @Document
-@RequiredArgsConstructor
 class Book {
 	@Id
 	private String bookId;
