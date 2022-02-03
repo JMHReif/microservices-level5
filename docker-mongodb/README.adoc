@@ -1,0 +1,147 @@
+= Docker image for MongoDB
+
+This image is a build of MongoDB's Docker image.
+
+== Building and running the image
+
+You can build the image on your local machine with the following commands:
+
+[source,shell]
+----
+cd docker/
+
+docker build . -t jmreif/mongodb
+----
+
+To run the container, execute the following command in the root directory:
+
+[source,shell]
+----
+./runMongoDB.sh
+----
+
+You can run a `docker ps` at the command line to verify the container is still running.
+
+== Loading Book data into MongoDB container
+
+Steps: 
+* Clean up data file (uses https://csvkit.readthedocs.io/en/latest/index.html[csvkit^] tool)
+[source,shell]
+----
+csvformat -U 1 books.csv > books_quoted.csv
+----
+
+* SSH into container with bash: 
+[source,shell]
+----
+docker exec -it mongoBooks bash
+----
+
+* Navigate to data directory (where script/csv are)
+[source,shell]
+----
+root@d861e71d3ef8:# cd /data/db
+root@d861e71d3ef8:/data/db# 
+----
+
+* Run insert script to load data (uses https://docs.mongodb.com/database-tools/mongoimport/[mongoimport^] tool)
+[source,shell]
+----
+root@d861e71d3ef8:/data/db# ./insert_books.sh
+2022-02-03T19:39:29.817+0000	connected to: mongodb://localhost/
+2022-02-03T19:39:30.061+0000	11127 document(s) imported successfully. 0 document(s) failed to import.
+root@d861e71d3ef8:/data/db# 
+----
+
+_Note: may need to open permissions on script: `chmod 755 insert_books.sh` before running_
+
+* Verify data loaded
+
+** Log into mongo shell (https://docs.mongodb.com/mongodb-shell/#mongodb-binary-bin.mongosh[`mongosh`^])
+[source,shell]
+----
+root@d861e71d3ef8:/data/db# mongosh -u mongoadmin -p Testing123
+Current Mongosh Log ID:	61fc309a5301e90f038efa24
+Connecting to:		mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.1.9
+Using MongoDB:		5.0.6
+Using Mongosh:		1.1.9
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+test>
+----
+
+** Show existing databases, use `books` db, and show collections (document types)
+[source,shell]
+----
+test> show dbs
+admin    102 kB
+books    1.6 MB
+config  61.4 kB
+local   73.7 kB
+test> use books
+switched to db books
+books> show collections
+books
+books> 
+----
+
+** Run some queries
+[source, shell]
+----
+books> db.books.countDocuments()
+11127
+books> db.books.find({bookID: 5})
+[
+  {
+    _id: ObjectId("61fc2f71eddab37f962be17a"),
+    bookID: 5,
+    title: 'Harry Potter and the Prisoner of Azkaban (Harry Potter  #3)',
+    authors: 'J.K. Rowling/Mary GrandPré',
+    average_rating: 4.56,
+    isbn: '043965548X',
+    isbn13: Long("9780439655484"),
+    language_code: 'eng',
+    num_pages: 435,
+    ratings_count: 2339585,
+    text_reviews_count: 36325,
+    publication_date: '5/1/2004',
+    publisher: 'Scholastic Inc.'
+  }
+]
+books> db.books.find({authors: "George Lucas"})
+[
+  {
+    _id: ObjectId("61fc2f71eddab37f962be6cb"),
+    bookID: 4752,
+    title: 'A New Hope: The Illustrated Screenplay (Star Wars  Episode IV)',
+    authors: 'George Lucas',
+    average_rating: 4.23,
+    isbn: 345420691,
+    isbn13: Long("9780345420695"),
+    language_code: 'eng',
+    num_pages: 166,
+    ratings_count: 11,
+    text_reviews_count: 0,
+    publication_date: '3/24/1998',
+    publisher: 'Del Rey'
+  },
+  {
+    _id: ObjectId("61fc2f71eddab37f962be6d2"),
+    bookID: 4767,
+    title: 'Star Wars Episode 1: The Phantom Menace Illustrated Screenplay',
+    authors: 'George Lucas',
+    average_rating: 3.92,
+    isbn: 345431103,
+    isbn13: Long("9780345431103"),
+    language_code: 'eng',
+    num_pages: 150,
+    ratings_count: 259,
+    text_reviews_count: 9,
+    publication_date: '4/21/1999',
+    publisher: 'Del Rey Books'
+  }
+]
+----
+
+_Note: if formatting of return results is poor or ugly, you can add `.pretty()` to the end of the query (`db.books.find({authors: "George Lucas"}).pretty()`)._
