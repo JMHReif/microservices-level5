@@ -43,7 +43,7 @@ class BookController {
 }
 
 class Book {
-	private String bookId;
+	private String bookID;
 	private String title;
-	private String author;
+	private String authors;
 }
