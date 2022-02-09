@@ -31,6 +31,13 @@ Steps:
 csvformat -U 1 books.csv > books_quoted.csv
 ----
 
+* Copy data spreadsheet and load script to expected directory: 
+[source,shell]
+----
+cp loadData/books_quoted.csv $HOME/Projects/docker/mongoBooks/data
+cp loadData/insert_books.sh $HOME/Projects/docker/mongoBooks/data
+----
+
 * SSH into container with bash: 
 [source,shell]
 ----
