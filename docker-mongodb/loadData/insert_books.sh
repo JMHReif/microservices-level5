@@ -1,6 +1,6 @@
 #! /bin/bash
 auth="--authenticationDatabase admin --username mongoadmin --password Testing123"
-db="books"
-options="--type=csv --headerline --ignoreBlanks"
+db="goodreads"
+options="--mode=insert"
 
-mongoimport $auth --db=$db $options --collection=book --file=books_quoted.csv
+mongoimport $auth --db=$db --collection=book --file=goodreads_books_10k.json
