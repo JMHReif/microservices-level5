@@ -18,9 +18,9 @@ image::microservices-level4.png[]
 
 We have 3 services in this repository: `service1`, `service2`, and `service3`. Our architecture has changed slightly from the previous https://github.com/JMHReif/microservices-level3[Level3^], as we have added a new service for book authors. Responsibilities of each service are outlined below.
 
-* Service1: backend service for interacting with stored data (MongoDB database in Docker container) and hosting the REST api endpoint (`localhost:8080/db/books`)
-* Service2: client service for calling the available REST endpoint(s) from Service1 and returning any results (books)
-* Service3: backend service for interacting with stored data (MongoDB database in Docker container) and hosting the REST api endpoint (`localhost:8082/db/authors`)
+* Service1: backend service for interacting with stored book data and hosting the REST api endpoint (`localhost:8081/db/books`)
+* Service2: client REST service for calling the available REST endpoint in service1 and returning any results (books)
+* Service3: backend service for interacting with stored author data and hosting the REST api endpoint (`localhost:8082/db/authors`)
 
 With all three services running, we can use service2 to call service1 for the books backend, and separately call service3 from the command line for the authors backend.
 
@@ -39,8 +39,10 @@ To reproduce this intro example, please follow the steps.
 
 1. Clone this repository
 2. Run each service (either from an IDE or command line)
-3. Open a browser and access one of the nested endpoints (`localhost:8080/db/books` or `localhost:8082/db/authors`).
-4. See the results of books or authors appear :)
+3. Test backing service (books): Open a command line window and execute `curl localhost:8081/db/books`.
+4. Test client service: Open a command line window and execute `curl localhost:8080/goodreads`.
+5. Test backing service (authors): Open a command line window and execute `curl localhost:8082/db/authors`.
+6. See the results of books or authors appear :)
 
 //== Content
 
