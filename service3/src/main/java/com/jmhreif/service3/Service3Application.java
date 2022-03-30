@@ -24,7 +24,7 @@ public class Service3Application {
 @RestController
 @AllArgsConstructor
 @RequestMapping("/db")
-class BookController {
+class AuthorController {
 	private final AuthorRepository authorRepo;
 
 	@GetMapping("/authors")
