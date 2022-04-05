@@ -1,6 +1,6 @@
 #Pull base image
 #-----------------
-FROM mongo
+FROM mongo:5.0
 
 #Author
 #-------
