@@ -26,19 +26,19 @@ public class Service1Application {
 }
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/db")
+@AllArgsConstructor
 class BookController {
 	private final BookRepository bookRepository;
 
 	@GetMapping
 	String liveCheck() { return "Service1 is up"; }
 
-	@GetMapping("/book/{id}")
-	Mono<Book> getBook(@PathVariable String id) { return bookRepository.findById(id); }
-
 	@GetMapping("/books")
 	Flux<Book> getBooks() { return bookRepository.findAll(); }
+
+	@GetMapping("/book/{mongoId}")
+	Mono<Book> getBook(@PathVariable String mongoId) { return bookRepository.findById(mongoId); }
 }
 
 interface BookRepository extends ReactiveCrudRepository<Book, String> {
@@ -48,7 +48,7 @@ interface BookRepository extends ReactiveCrudRepository<Book, String> {
 @Document
 class Book {
 	@Id
-	private String id;
+	private String mongoId;
 	@NonNull
 	private String book_id;
 

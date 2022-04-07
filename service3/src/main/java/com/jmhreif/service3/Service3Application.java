@@ -25,19 +25,19 @@ public class Service3Application {
 }
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/db")
+@AllArgsConstructor
 class AuthorController {
 	private final AuthorRepository authorRepo;
 
 	@GetMapping
 	String liveCheck() { return "Service3 is up"; }
 
-	@GetMapping("/author/{id}")
-	Mono<Author> getAuthor(@PathVariable String id) { return authorRepo.findById(id); }
-
 	@GetMapping("/authors")
 	Flux<Author> getAuthors() { return authorRepo.findAll(); }
+
+	@GetMapping("/author/{mongoId}")
+	Mono<Author> getAuthor(@PathVariable String mongoId) { return authorRepo.findById(mongoId); }
 }
 
 interface AuthorRepository extends ReactiveCrudRepository<Author, String> {
@@ -47,7 +47,7 @@ interface AuthorRepository extends ReactiveCrudRepository<Author, String> {
 @Document
 class Author {
 	@Id
-	private String id;
+	private String mongoId;
 	@NonNull
 	private String author_id;
 

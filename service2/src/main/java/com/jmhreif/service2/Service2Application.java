@@ -31,15 +31,15 @@ public class Service2Application {
 
 @Component
 @RestController
-@AllArgsConstructor
 @RequestMapping("/goodreads")
+@AllArgsConstructor
 class BookController {
 	private final WebClient client;
 
-	@GetMapping("/health")
+	@GetMapping
 	String liveCheck() { return "Service2 is up"; }
 
-	@GetMapping
+	@GetMapping("/books")
 	Flux<Book> getBooks() {
 		return client.get()
 				.uri("/db/books")
@@ -50,7 +50,7 @@ class BookController {
 
 @Data
 class Book {
-	private String id;
+	private String mongoId;
 	private String book_id;
 	private String title, format, isbn, isbn13, edition_information;
 }

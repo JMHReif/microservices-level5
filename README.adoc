@@ -41,7 +41,7 @@ To reproduce this intro example, please follow the steps.
 2. Build each service's Docker container (note: if not on arm64 silicon chip, will need to update image names in compose file, as well).
 3. Execute Docker compose with `docker-compose up -d`.
 4. Test backing service (books): Open a command line window and execute `curl localhost:8081/db/books`.
-5. Test client service: Open a command line window and execute `curl localhost:8080/goodreads`.
+5. Test client service: Open a command line window and execute `curl localhost:8080/goodreads/books`.
 6. Test backing service (authors): Open a command line window and execute `curl localhost:8082/db/authors`.
 7. See the results of books or authors appear :)
 
