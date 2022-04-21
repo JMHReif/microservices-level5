@@ -29,7 +29,6 @@ public class Service2Application {
 
 }
 
-@Component
 @RestController
 @RequestMapping("/goodreads")
 @AllArgsConstructor
