@@ -4,16 +4,18 @@ This image is a build of MongoDB's Docker image.
 
 == Building and running the image
 
-You can build the image on your local machine with the following commands:
+If you are running on Apple silicon architecture (arm64), you can use my build of the Docker container without creating one locally.
+
+However, if you are using a different architecture (amd64, Windows, Linux), you will need to build the image on your local machine with the following commands:
 
 [source,shell]
 ----
 cd docker/
 
-docker build . -t jmreif/mongodb
+docker build . -t mongodb
 ----
 
-To run the container, execute the following command in the root directory:
+To run the container, execute the following command in the root directory (updating the script's `jmreif/mongodb` to `mongodb`):
 
 [source,shell]
 ----

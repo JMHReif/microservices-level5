@@ -45,9 +45,9 @@ To reproduce this intro example, please follow the steps.
 6. Test backing service (authors): Open a command line window and execute `curl localhost:8082/db/authors`.
 7. See the results of books or authors appear :)
 
-//== Content
+== Content
 
-//* Blog post: https://jmhreif.com/blog/microservices-level5/[Microservices Level 5^]
+* Blog post: https://jmhreif.com/blog/microservices-level5/[Microservices Level 5^]
 
 == Previous steps
 
